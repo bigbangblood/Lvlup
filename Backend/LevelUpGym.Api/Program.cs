@@ -20,6 +20,9 @@ public class Program
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         builder.Services.AddScoped<IJwtService, JwtService>();
 
         builder.Services.AddCors(options =>
@@ -57,6 +60,11 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+        }
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseCors("AllowAngular");

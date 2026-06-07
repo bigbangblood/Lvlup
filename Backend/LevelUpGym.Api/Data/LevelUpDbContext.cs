@@ -14,18 +14,10 @@ public class LevelUpDbContext : DbContext
     public DbSet<Client> Clients { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Eps> EpsList { get; set; }
-    public DbSet<Category> Categories { get; set; }
     public DbSet<Item> Items { get; set; }
-    public DbSet<Product> Products { get; set; }
     public DbSet<Membership> Memberships { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
-    public DbSet<Sale> Sales { get; set; }
-    public DbSet<SaleDetail> SaleDetails { get; set; }
-    public DbSet<Purchase> Purchases { get; set; }
-    public DbSet<PurchaseDetail> PurchaseDetails { get; set; }
-    public DbSet<Provider> Providers { get; set; }
-    public DbSet<PaymentMethod> PaymentMethods { get; set; }
     public DbSet<CashMovement> CashMovements { get; set; }
     public DbSet<Progress> ProgressReports { get; set; }
     public DbSet<EmployeePayment> EmployeePayments { get; set; }
@@ -33,8 +25,6 @@ public class LevelUpDbContext : DbContext
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<Cart> Carts { get; set; }
-    public DbSet<CartItem> CartItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -96,22 +86,6 @@ public class LevelUpDbContext : DbContext
             entity.HasKey(e => e.IdItem);
         });
 
-        // Products Table
-        modelBuilder.Entity<Product>(entity =>
-        {
-            entity.ToTable("productos");
-            entity.HasKey(e => e.IdProducto);
-            entity.HasIndex(e => e.Nombre).IsUnique();
-
-            entity.HasOne(d => d.Category)
-                .WithMany(p => p.Products)
-                .HasForeignKey(d => d.IdCategoria);
-
-            entity.HasOne(d => d.Item)
-                .WithOne(p => p.Product)
-                .HasForeignKey<Product>(d => d.IdItem);
-        });
-
         // Memberships Table
         modelBuilder.Entity<Membership>(entity =>
         {
@@ -143,49 +117,6 @@ public class LevelUpDbContext : DbContext
                 .HasForeignKey(d => d.IdEstado);
         });
 
-        // Sales Table
-        modelBuilder.Entity<Sale>(entity =>
-        {
-            entity.ToTable("ventas");
-            entity.HasKey(e => e.IdVenta);
-
-            entity.HasOne(d => d.Client)
-                .WithMany(p => p.Sales)
-                .HasForeignKey(d => d.IdCliente);
-
-            entity.HasOne(d => d.PaymentMethodNavigation)
-                .WithMany(p => p.Sales)
-                .HasForeignKey(d => d.MetodoPago);
-        });
-
-        // Purchases Table
-        modelBuilder.Entity<Purchase>(entity =>
-        {
-            entity.ToTable("compras");
-            entity.HasKey(e => e.IdCompra);
-
-            entity.HasOne(d => d.Provider)
-                .WithMany(p => p.Purchases)
-                .HasForeignKey(d => d.IdProveedor);
-
-            entity.HasOne(d => d.PaymentMethodNavigation)
-                .WithMany(p => p.Purchases)
-                .HasForeignKey(d => d.MetodoPago);
-        });
-
-        // Decimal Precision
-        modelBuilder.Entity<SaleDetail>()
-            .Property(p => p.PrecioUnitario)
-            .HasPrecision(18, 2);
-        
-        modelBuilder.Entity<SaleDetail>()
-            .Property(p => p.SubTotal)
-            .HasPrecision(18, 2);
-
-        modelBuilder.Entity<PurchaseDetail>()
-            .Property(p => p.PrecioUnitario)
-            .HasPrecision(18, 2);
-
         modelBuilder.Entity<Employee>()
             .Property(p => p.SalarioBase)
             .HasPrecision(18, 2);
@@ -204,26 +135,5 @@ public class LevelUpDbContext : DbContext
             entity.HasIndex(e => new { e.IdAuth, e.IdRol }).IsUnique();
         });
 
-        // Cart Configuration
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.ToTable("carritos");
-            entity.HasKey(e => e.IdCarrito);
-            entity.HasOne(c => c.Client)
-                .WithMany()
-                .HasForeignKey(c => c.IdCliente);
-        });
-
-        modelBuilder.Entity<CartItem>(entity =>
-        {
-            entity.ToTable("carrito_items");
-            entity.HasKey(e => e.IdCartItem);
-            entity.HasOne(ci => ci.Cart)
-                .WithMany(c => c.Items)
-                .HasForeignKey(ci => ci.IdCarrito);
-            entity.HasOne(ci => ci.Product)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdProducto);
-        });
     }
 }

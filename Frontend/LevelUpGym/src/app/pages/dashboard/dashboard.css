@@ -101,14 +101,6 @@
   background: var(--accent-red);
 }
 
-.cart-badge {
-  background: var(--accent-red);
-  color: white;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: auto;
-}
 
 .sidebar-footer {
   padding: 0 2rem;
@@ -248,107 +240,6 @@
 
 .promo-card h3 { color: var(--accent-red); font-size: 1.25rem; margin-bottom: 1rem; }
 .promo-card p { font-size: 0.9rem; color: #888; margin-bottom: 2rem; line-height: 1.6; }
-
-/* Cart Styling */
-.cart-layout {
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 3rem;
-  align-items: start;
-}
-
-.cart-card {
-  background: var(--bg-card);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  border-radius: 4px;
-}
-
-.item-img { font-size: 1.5rem; background: #222; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
-.item-details { flex-grow: 1; }
-.item-details h4 { margin: 0 0 0.25rem 0; font-size: 1rem; }
-.item-details p { margin: 0; font-size: 0.8rem; color: #666; }
-
-.item-quantity {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: black;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-
-.item-quantity button {
-  background: transparent;
-  border: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.item-price { font-weight: 800; font-size: 1.1rem; min-width: 100px; text-align: right; }
-.remove-item { background: transparent; border: none; color: #444; cursor: pointer; font-size: 1rem; transition: color 0.3s; }
-.remove-item:hover { color: var(--accent-red); }
-
-.cart-summary-side {
-  background: var(--bg-card);
-  padding: 2rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
-
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-  color: #888;
-}
-
-.summary-line.total {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #222;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: white;
-}
-
-.free { color: #00ff88; font-weight: 700; }
-
-.btn-checkout {
-  width: 100%;
-  padding: 1.25rem;
-  background: var(--accent-red);
-  color: white;
-  border: none;
-  font-weight: 800;
-  letter-spacing: 1px;
-  cursor: pointer;
-  margin-top: 2rem;
-  transition: transform 0.2s;
-}
-
-.btn-checkout:hover { transform: scale(1.02); background: #f00; }
-
-.btn-clear {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #444;
-  font-size: 0.7rem;
-  font-weight: 700;
-  margin-top: 1rem;
-  cursor: pointer;
-}
-
-.btn-clear:hover { color: #888; }
 
 /* Membership Specific */
 .membership-card {
@@ -495,7 +386,6 @@
 @media (max-width: 1200px) {
   .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
   .content-row { grid-template-columns: 1fr; }
-  .cart-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -716,4 +606,5 @@
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
+
 

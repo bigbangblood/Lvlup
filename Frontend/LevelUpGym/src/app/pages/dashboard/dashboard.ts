@@ -1,22 +1,20 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
-import { CartService } from '../../services/cart';
 import { MembershipService, Membership } from '../../services/membership';
 import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent {
   authService = inject(AuthService);
-  cartService = inject(CartService);
   membershipService = inject(MembershipService);
   private alertService = inject(AlertService);
   private router = inject(Router);
@@ -28,8 +26,6 @@ export class DashboardComponent {
   activeSection = 'inicio';
   today = new Date();
   
-  showPaymentModal = false;
-  isProcessingPayment = false;
   showDeleteConfirmModal = false;
 
   lastReceipt = signal<any>(null);
@@ -69,30 +65,6 @@ export class DashboardComponent {
 
   setSection(section: string) {
     this.activeSection = section;
-  }
-
-  checkout() {
-    this.showPaymentModal = true;
-  }
-
-  processPayment() {
-    this.isProcessingPayment = true;
-    
-    // Simulate API Delay
-    setTimeout(() => {
-      this.cartService.checkout().subscribe({
-        next: (res: any) => {
-          this.isProcessingPayment = false;
-          this.showPaymentModal = false;
-          this.alertService.success('¡Pago exitoso! Gracias por tu compra.', 'Pago Exitoso');
-          this.activeSection = 'inicio';
-        },
-        error: (err: any) => {
-          this.isProcessingPayment = false;
-          this.alertService.error('Error al procesar el pago. Intenta de nuevo.', 'Error de Pago');
-        }
-      });
-    }, 2000);
   }
 
   updateProfile() {

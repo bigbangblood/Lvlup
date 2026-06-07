@@ -35,10 +35,6 @@ public class PaymentMethod : BaseEntity
     
     [StringLength(50)]
     public string? Nombre { get; set; }
-
-    // Navigation
-    public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
-    public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
 }
 
 public class EmployeePayment : BaseEntity

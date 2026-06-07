@@ -138,13 +138,6 @@ public class ClientsController : ControllerBase
             var client = profile.Client;
             if (client != null)
             {
-                // Disassociate from sales
-                var sales = await _context.Sales.Where(s => s.IdCliente == client.IdCliente).ToListAsync();
-                foreach (var sale in sales)
-                {
-                    sale.IdCliente = null;
-                }
-
                 // Remove subscriptions
                 var subscriptions = await _context.Subscriptions.Where(s => s.IdCliente == client.IdCliente).ToListAsync();
                 _context.Subscriptions.RemoveRange(subscriptions);
@@ -152,14 +145,6 @@ public class ClientsController : ControllerBase
                 // Remove progress reports
                 var progress = await _context.ProgressReports.Where(p => p.IdCliente == client.IdCliente).ToListAsync();
                 _context.ProgressReports.RemoveRange(progress);
-
-                // Remove carts & items
-                var carts = await _context.Carts.Include(c => c.Items).Where(c => c.IdCliente == client.IdCliente).ToListAsync();
-                foreach (var cart in carts)
-                {
-                    _context.CartItems.RemoveRange(cart.Items);
-                }
-                _context.Carts.RemoveRange(carts);
 
                 _context.Clients.Remove(client);
             }

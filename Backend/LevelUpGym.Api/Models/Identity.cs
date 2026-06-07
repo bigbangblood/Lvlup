@@ -85,7 +85,6 @@ public class Client : BaseEntity
     public virtual Profile Profile { get; set; } = null!;
     public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
     public virtual ICollection<Progress> ProgressReports { get; set; } = new List<Progress>();
-    public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
 }
 
 public class Employee : BaseEntity

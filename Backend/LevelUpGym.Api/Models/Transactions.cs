@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LevelUpGym.Api.Models;
 
+[NotMapped]
 public class Sale : BaseEntity
 {
     [Key]
@@ -14,13 +16,9 @@ public class Sale : BaseEntity
     public DateTime? Fecha { get; set; }
     
     public decimal? Total { get; set; }
-
-    // Navigation
-    public virtual Client? Client { get; set; }
-    public virtual PaymentMethod? PaymentMethodNavigation { get; set; }
-    public virtual ICollection<SaleDetail> Details { get; set; } = new List<SaleDetail>();
 }
 
+[NotMapped]
 public class SaleDetail : BaseEntity
 {
     [Key]
@@ -35,12 +33,9 @@ public class SaleDetail : BaseEntity
     public decimal? PrecioUnitario { get; set; }
     
     public decimal? SubTotal { get; set; }
-
-    // Navigation
-    public virtual Sale? Sale { get; set; }
-    public virtual Item? Item { get; set; }
 }
 
+[NotMapped]
 public class Purchase : BaseEntity
 {
     [Key]
@@ -53,13 +48,9 @@ public class Purchase : BaseEntity
     public DateTime? Fecha { get; set; }
     
     public decimal? Total { get; set; }
-
-    // Navigation
-    public virtual Provider? Provider { get; set; }
-    public virtual PaymentMethod? PaymentMethodNavigation { get; set; }
-    public virtual ICollection<PurchaseDetail> Details { get; set; } = new List<PurchaseDetail>();
 }
 
+[NotMapped]
 public class PurchaseDetail : BaseEntity
 {
     [Key]
@@ -74,10 +65,6 @@ public class PurchaseDetail : BaseEntity
     public decimal? PrecioUnitario { get; set; }
     
     public decimal? Subtotal { get; set; }
-
-    // Navigation
-    public virtual Purchase? Purchase { get; set; }
-    public virtual Product? Product { get; set; }
 }
 
 public class Subscription : BaseEntity
@@ -118,18 +105,16 @@ public class CashMovement : BaseEntity
     public string? Descripcion { get; set; }
 }
 
+[NotMapped]
 public class Cart : BaseEntity
 {
     [Key]
     public int IdCarrito { get; set; }
     
     public int IdCliente { get; set; }
-    
-    // Navigation
-    public virtual Client Client { get; set; } = null!;
-    public virtual ICollection<CartItem> Items { get; set; } = new List<CartItem>();
 }
 
+[NotMapped]
 public class CartItem : BaseEntity
 {
     [Key]
@@ -140,8 +125,4 @@ public class CartItem : BaseEntity
     public int IdProducto { get; set; }
     
     public int Cantidad { get; set; }
-
-    // Navigation
-    public virtual Cart Cart { get; set; } = null!;
-    public virtual Product Product { get; set; } = null!;
 }

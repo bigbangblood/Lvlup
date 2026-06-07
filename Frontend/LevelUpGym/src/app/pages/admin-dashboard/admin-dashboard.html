@@ -7,7 +7,6 @@
     <nav class="sidebar-nav">
       <button (click)="setTab('resumen')" [class.active]="activeTab === 'resumen'"><span class="menu-icon">📊</span> Resumen</button>
       <button (click)="setTab('clientes')" [class.active]="activeTab === 'clientes'"><span class="menu-icon">👥</span> Clientes</button>
-      <button (click)="setTab('ventas')" [class.active]="activeTab === 'ventas'"><span class="menu-icon">💳</span> Ventas</button>
     </nav>
     <div class="sidebar-footer">
       <button class="btn-logout" (click)="logout()"><span class="menu-icon">🚪</span> Salir</button>
@@ -44,45 +43,13 @@
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <span class="label">Catálogo de Productos</span>
-            <h2 class="value">{{ productsCount() }}</h2>
-            <span class="trend positive">Disponibles en tienda 🛍️</span>
+            <span class="label">Clientes Registrados</span>
+            <h2 class="value">{{ newMembersCount() }}</h2>
+            <span class="trend positive">Activos en la plataforma 👥</span>
           </div>
-          <div class="stat-icon">🛍️</div>
+          <div class="stat-icon">👥</div>
         </div>
       </div>
-
-      <section class="recent-activity">
-        <div class="card-header">
-          <h2>Ventas Recientes</h2>
-          <button class="btn-text" (click)="setTab('ventas')">Ver todas</button>
-        </div>
-        <div class="activity-table-wrapper">
-          <table class="activity-table">
-            <thead>
-              <tr>
-                <th>Factura ID</th>
-                <th>Cliente</th>
-                <th>Fecha / Hora</th>
-                <th>Monto Total</th>
-                <th>Método de Pago</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let sale of sales().slice(0, 5)">
-                <td>#{{ sale.idVenta }}</td>
-                <td>{{ sale.clienteNombre }}</td>
-                <td>{{ sale.fecha | date:'medium' }}</td>
-                <td>${{ sale.total | number }}</td>
-                <td><span class="status-badge success">Tarjeta de Crédito</span></td>
-              </tr>
-              <tr *ngIf="sales().length === 0">
-                <td colspan="5" style="text-align: center; color: #666; padding: 2rem;">No se registran ventas recientes.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </div>
 
     <!-- CLIENTES TAB -->
@@ -119,38 +86,5 @@
       </section>
     </div>
 
-    <!-- VENTAS TAB -->
-    <div *ngSwitchCase="'ventas'" class="tab-content fade-in">
-      <section class="recent-activity">
-        <div class="card-header">
-          <h2>Historial Completo de Ventas</h2>
-        </div>
-        <div class="activity-table-wrapper">
-          <table class="activity-table">
-            <thead>
-              <tr>
-                <th>Factura ID</th>
-                <th>Cliente</th>
-                <th>Fecha / Hora</th>
-                <th>Monto Total</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let sale of sales()">
-                <td>#{{ sale.idVenta }}</td>
-                <td>{{ sale.clienteNombre }}</td>
-                <td>{{ sale.fecha | date:'medium' }}</td>
-                <td>${{ sale.total | number }} COP</td>
-                <td><span class="status-badge success">Completado</span></td>
-              </tr>
-              <tr *ngIf="sales().length === 0">
-                <td colspan="5" style="text-align: center; color: #666; padding: 2rem;">No hay ventas registradas en el sistema.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
   </main>
 </div>

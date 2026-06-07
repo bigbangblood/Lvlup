@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LevelUpGym.Api.Models;
 
@@ -14,11 +15,10 @@ public class Item : BaseEntity
     public string? Estado { get; set; }
 
     // Navigation
-    public virtual Product? Product { get; set; }
     public virtual Membership? Membership { get; set; }
-    public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
 }
 
+[NotMapped]
 public class Category : BaseEntity
 {
     [Key]
@@ -32,11 +32,9 @@ public class Category : BaseEntity
     
     [StringLength(20)]
     public string? Estado { get; set; }
-
-    // Navigation
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }
 
+[NotMapped]
 public class Product : BaseEntity
 {
     [Key]
@@ -58,9 +56,7 @@ public class Product : BaseEntity
     public string? Estado { get; set; }
 
     // Navigation
-    public virtual Category? Category { get; set; }
     public virtual Item? Item { get; set; }
-    public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 }
 
 public class Membership : BaseEntity
@@ -86,6 +82,7 @@ public class Membership : BaseEntity
     public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
 }
 
+[NotMapped]
 public class Provider : BaseEntity
 {
     [Key]
@@ -105,7 +102,4 @@ public class Provider : BaseEntity
     
     [StringLength(20)]
     public string? Estado { get; set; }
-
-    // Navigation
-    public virtual ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
 }
